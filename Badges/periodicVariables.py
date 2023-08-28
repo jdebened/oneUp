@@ -8,7 +8,6 @@ from datetime import timedelta
 import _cffi_backend
 from billiard.connection import CHALLENGE
 from celery.bin.result import result
-from celery.five import monotonic
 from dateutil.utils import today
 from django.conf import settings
 from django.core.cache import cache
@@ -28,7 +27,7 @@ LOCK_EXPIRE = 60 * 5 # lock expire in 5 minutes
 
 @contextmanager
 def memcache_lock(lock_id, oid):
-    timeout_at = monotonic() + LOCK_EXPIRE - 3
+    timeout_at = time.monotonic() + LOCK_EXPIRE - 3
     # cache.add fails if the key already exists
     status = cache.add(lock_id, oid, LOCK_EXPIRE)
     try:
@@ -36,7 +35,7 @@ def memcache_lock(lock_id, oid):
     finally:
         # memcache delete is very slow, but we have to use it to take
         # advantage of using add() for atomic locking
-        if monotonic() < timeout_at and status:
+        if time.monotonic() < timeout_at and status:
             # don't release the lock if we exceeded the timeout
             # to lessen the chance of releasing an expired lock
             # owned by someone else

@@ -1,5 +1,6 @@
 import importlib
 from oneUp.settings import BASE_DIR
+#BASE_DIR="."
 import os
 from decimal import Decimal
 
@@ -130,11 +131,16 @@ else:
             setattr(sandbox,lib,libTable)
             lua.execute('table.insert(_libs,"'+lib+'")')
         
-        init_library_function_code = '''function(uniqid,seed,questiondir)
-            env = getfenv(0)
+        init_library_function_code = '''function(uniqid,seed,questiondir,env)
             for _,lib in pairs(_libs) do
-                if env[lib].initialize then
-                    env[lib].initialize(uniqid,seed,questiondir)
+                if type(env[lib]) == "table" then
+                    if env[lib].initialize then
+                        env[lib].initialize(uniqid,seed,questiondir)
+                    end
+                else
+                    if env[lib][0].initialize then
+                        env[lib][0].initialize(uniqid,seed,questiondir)
+                    end
                 end
             end
         end'''
@@ -143,8 +149,13 @@ else:
         setattr(sandbox,"_libs",lua.eval("_libs"))
         setattr(sandbox,"_initialize_libraries",init_library_function)
         
-        setfenv = lua.eval("setfenv")
-        setfenv(0, sandbox)
+        env = lua.eval("_ENV")
+        # go through and remove any key that we do not want to be part of our sandboxed environment
+        for k in env.keys():
+            if k not in sandbox.keys():
+                delattr(env, k)
+        for k, v in sandbox.items():
+            setattr(env, k, v)
         return lua
     
     class LuaErrorType:
@@ -342,7 +353,7 @@ else:
         function (v)
             _uniqid = v
         end
-        
+    
     make_input =
         function (name,type,size)
             local fullname = _uniqid..'-'.._current_part..'-'..name
@@ -381,7 +392,7 @@ else:
             header_code_seg = CodeSegment.new(CodeSegment.system_lua,header_code,"")
             set_uniqid_code_seg = CodeSegment.new(CodeSegment.system_lua,'_set_uniqid("'+self.uniqid+'")\n',"")
             init_inputs_code_seg = CodeSegment.new(CodeSegment.system_lua,'_init_inputs('+str(self.numParts)+')\n',"")
-            init_modules_code_seg = CodeSegment.new(CodeSegment.system_lua,'_initialize_libraries("'+self.uniqid+'",'+str(self.seed)+',"'+self.questiondir+'")\n',"")
+            init_modules_code_seg = CodeSegment.new(CodeSegment.system_lua,'_initialize_libraries("'+self.uniqid+'",'+str(self.seed)+',"'+self.questiondir+'",_ENV)\n',"")
             
             prepended_code_segments = [header_code_seg, set_uniqid_code_seg, init_inputs_code_seg,init_modules_code_seg] + code_segments
             

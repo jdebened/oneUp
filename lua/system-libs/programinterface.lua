@@ -19,7 +19,7 @@ local getRandomBytes = function (n)
 end
 
 local dirChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-"
-local dirCharsLen = string.len(dirChars)
+local dirCharsLen = 62
 
 local getRandomDirName = function ()
   local bytes = getRandomBytes(20)

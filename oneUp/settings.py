@@ -40,7 +40,7 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 SECRET_KEY = '6l1(5i-qm34-eb!@un9gc%(g$o^=rgw8l++0!o9t6-^($qi6&k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False#True
 # Logging Levels: DEBUG(Everything) : INFO(Except DEBUG) : WARNING(Except INFO & DEBUG) : ERROR(CRITICAL & ERROR) : CRITICAL(ONLY)
 LOGGING_LEVEL = 'DEBUG'
 LOGSTASH_HOST = 'localhost'
@@ -101,6 +101,7 @@ LOGGING = {
 }
 
 ALLOWED_HOSTS = [
+'webster.csc.villanova.edu'
     #     'oneup.wssu.edu'
 ]
 
@@ -179,11 +180,13 @@ STATIC_PATH = os.path.join(BASE_DIR, 'static')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATIC_URL = '/OneUp/'  # You may find this is already defined as such.
+STATIC_URL = os.path.join(BASE_DIR, '/static/')  # You may find this is already defined as such.
+#STATIC_URL = os.path.join(BASE_DIR, '/OneUp/')  # You may find this is already defined as such.
 
 CKEDITOR_BASEPATH = os.path.join(STATIC_PATH, 'ThirdParty/ckeditor/ckeditor')
 
-STATICFILES_DIRS = []
+#STATICFILES_DIRS = []
+#STATICFILES_DIRS = (BASE_DIR.child('oneUp').child('static'),)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

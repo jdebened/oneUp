@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('Instructors', '0097_streaks_awardid'),
+        ('django_celery_beat', '__latest__'),
     ]
 
     operations = [

@@ -24,7 +24,7 @@ EMAILING_ENABLED = False #Option to set email sending to be disabled or enabled
 
 # This is used for uploading AvatarImages
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # This is for the sever
-MEDIA_URL = '/media/'  # This is for the html
+MEDIA_URL = os.path.join(BASE_DIR, 'media/')  # This is for the html
 CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = True
 CKEDITOR_RESTRICT_BY_USER = True
@@ -134,6 +134,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -182,6 +183,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = os.path.join(BASE_DIR, '/static/')  # You may find this is already defined as such.
 #STATIC_URL = os.path.join(BASE_DIR, '/OneUp/')  # You may find this is already defined as such.
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 CKEDITOR_BASEPATH = os.path.join(STATIC_PATH, 'ThirdParty/ckeditor/ckeditor')
 

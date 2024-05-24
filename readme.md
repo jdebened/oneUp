@@ -1,31 +1,37 @@
-Installation instructions:
+# Installation instructions:
 
 Install miniconda per the website's instructions.
 
-Run the following commands:  
-conda create -y --name OneUp python=3.11.4 pip  
-conda activate OneUp  
-pip install -r install/reqs.txt
+Run the following commands:
 
-curl ifconfig.me > install/s2  
-python install/combine.py install/s1 install/s2 install/s3 install/settings.py  
-cp install/settings.py oneup/settings.py 
+	conda create -y --name OneUp python=3.11.4 pip  
+	conda activate OneUp  
+	pip install -r install/reqs.txt
 
-python manage.py migrate  
-python manage.py collectstatic  
-python manage.py createsuperuser
+	curl ifconfig.me > install/s2  
+	python install/combine.py install/s1 install/s2 install/s3 install/settings.py  
+	cp install/settings.py oneup/settings.py 
 
-	Follow the steps on screen to create the admin account for the django server.
+	python manage.py migrate  
+	python manage.py collectstatic  
+	python manage.py createsuperuser
 
+Follow the steps on screen to create the admin account for the django server.
 
-gunicorn oneUp.wsgi -b 0.0.0.0:8000 --timeout 30 -w 4 
+	gunicorn oneUp.wsgi -b 0.0.0.0:8000 --timeout 30 -w 4 
 
 Type "0.0.0.0:8000/admin" into your browser URL bar and hit enter.  
-	NOTE: If you want to run on a different port, change 8000 to your desired port.
+NOTE: If you want to run on a different port, change 8000 to your desired port.
 
 Log into the admin panel using the username and password you created in the previous step.
 
-Adding a new course:
+In the top-left of the page, click "Home"  
+Click "Users"  
+Click on your username  
+Scroll down to "Groups" and click on "Choose all"  
+Scroll to the bottom of the page and click "SAVE"
+
+# Adding a new course:
 
 Scroll down to "Instructors" and click on "Coursess"  
 When the page loads, click "ADD COURSES" on the right  
@@ -41,12 +47,6 @@ In the top-left of the page, click "Instructors"
 Scroll down to "Instructor registered courses" and click "Add"  
 In the dropdown menus, select your user and your course  
 Click "SAVE"
-
-In the top-left of the page, click "Home"  
-Click "Users"  
-Click on your username  
-Scroll down to "Groups" and click on "Choose all"  
-Scroll to the bottom of the page and click "SAVE"
 
 In the top-left of the page, click "Home"  
 Scroll-down to "Badges", find "Course config params" and click "Add"  

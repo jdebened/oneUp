@@ -29,7 +29,7 @@ Django==2.2.4
 django-celery-beat==2.5.0
 -e git+https://github.com/AustinHodge4/django-ckeditor.git@dee0f3cfd70b9f150ea07298b572e8ebf88236ef#egg=django_ckeditor
 django-debug-toolbar==3.2.4
-django-easy-timezones==0.8.0
+git+https://github.com/jdebened/django-easy-timezones.git
 django-js-asset==2.0.0
 django-jsonfield==1.4.1
 django-notify-x==0.1.9
@@ -70,7 +70,6 @@ PySocks==1.7.1
 python-crontab==3.0.0
 python-dateutil==2.8.2
 python-logstash-async==2.7.0
-pytz==2016.6
 requests==2.31.0
 selenium==4.11.2
 service-identity==23.1.0

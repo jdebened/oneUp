@@ -2,19 +2,16 @@
 
 Install miniconda per the website's instructions.
 
-Run the following commands:
+Run the following command and follow the instructions that follow:
 
 	conda create -y --name OneUp python=3.11.4 pip  
 	conda activate OneUp  
-	pip install -r install/reqs.txt
+	bash install/install.sh
 
-	curl ifconfig.me > install/s2  
-	python install/combine.py install/s1 install/s2 install/s3 install/settings.py  
-	cp install/settings.py oneup/settings.py 
+NOTE: If you are unable to run the bash script, you can enter the commands line-by-line as described below in the "Manual installation" section.  
 
-	python manage.py migrate  
-	python manage.py collectstatic  
-	python manage.py createsuperuser
+## After installation:
+
 
 Follow the steps on screen to create the admin account for the django server.
 
@@ -31,7 +28,7 @@ Click on your username
 Scroll down to "Groups" and click on "Choose all"  
 Scroll to the bottom of the page and click "SAVE"
 
-# Adding a new course:
+## Adding a new course:
 
 Scroll down to "Instructors" and click on "Coursess"  
 When the page loads, click "ADD COURSES" on the right  
@@ -77,3 +74,18 @@ Type "0.0.0.0:8000/" into your browser URL bar and hit enter.
 The OneUp page should load and allow you to log into the account you created (you may already be logged in).  
 Click "VIEW COURSES"  
 Find your course and click "SELECT"  
+
+
+# Manual installation
+
+Run the following commands:
+
+	pip install -r install/reqs.txt
+
+	curl ifconfig.me > install/s2  
+	python install/combine.py install/s1 install/s2 install/s3 install/settings.py  
+	cp install/settings.py oneup/settings.py 
+
+	python manage.py migrate  
+	python manage.py collectstatic  
+	python manage.py createsuperuser
